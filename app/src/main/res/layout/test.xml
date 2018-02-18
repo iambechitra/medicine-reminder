@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:padding="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/medicationDoseText"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:paddingBottom="10dp"
+            android:text="Medication dose: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:textSize="20sp"
+            android:layout_marginBottom="5dp"
+            android:text="tap to set"
+            android:layout_toRightOf="@id/medicationDoseText"
+            android:paddingLeft="10dp"
+            android:id="@+id/medicationDoseSetText"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="18dp"
+            android:text="Food Instructions"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:id="@+id/foodInstructionText"
+            android:layout_below="@id/medicationDoseText"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="before food"
+            android:layout_below="@id/foodInstructionText"
+            android:id="@+id/beforeFoodRadioButton"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="with food"
+            android:layout_below="@id/beforeFoodRadioButton"
+            android:id="@+id/withFoodRadioButton"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="after food"
+            android:layout_below="@id/withFoodRadioButton"
+            android:id="@+id/afterFoodRadioButton"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="no food instructions"
+            android:layout_below="@id/afterFoodRadioButton"
+            android:id="@+id/noFoodInstructionRadioButton"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addtionalInfoText"
+            android:paddingTop="28dp"
+            android:text="Additional information"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_below="@id/noFoodInstructionRadioButton" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addtionalInfoEditText"
+            android:layout_below="@id/addtionalInfoText"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

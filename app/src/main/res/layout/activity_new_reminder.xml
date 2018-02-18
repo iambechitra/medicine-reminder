@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.example.bechitra.medicinereminder.NewReminderActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardViewer1"
+            android:layout_margin="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_margin="2dp"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/scrollButton1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/medicineName"
+                    android:textColor="@color/textColor"
+                    android:textSize="20sp"
+                    android:layout_alignParentLeft="true"
+                    android:text="Medicine Name"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/medicineName"
+                    android:padding="5dp"
+                    android:id="@+id/medicineNameInstruction"/>
+
+                <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/medicineNameInstruction"
+                    android:orientation="vertical"
+                    app:ael_duration="2000"
+                    app:ael_expanded="false"
+                    app:ael_interpolator="bounce"
+                    android:id="@+id/expandableLayout1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Enter the name of the medicine"
+                        android:textSize="20sp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/medicineNameEdit"/>
+
+                </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardViewer2"
+            android:layout_margin="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_margin="2dp"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/scrollButton2"/>
+
+                <Switch
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="3dp"
+                    android:id="@+id/reminderTimeSwitch"
+                    android:layout_toLeftOf="@id/scrollButton2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reminderTimesText"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="20sp"
+                    android:textColor="@color/textColor"
+                    android:text="Reminder Times"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/reminderTimesText"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="20sp"
+                    android:textColor="@color/textColor"
+                    android:id="@+id/reminderTimesOverViewText"
+                    android:text=""/>
+
+                <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/reminderTimesOverViewText"
+                    android:orientation="vertical"
+                    app:ael_duration="400"
+                    app:ael_expanded="false"
+                    app:ael_interpolator="bounce"
+                    android:id="@+id/expandableLayout2">
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></Spinner>
+
+                </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardViewer3"
+            android:layout_margin="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_margin="2dp"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/scrollButton3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/scheduleText"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="20sp"
+                    android:text="Schedule"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/scheduleInformationText"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/scheduleText"
+                    android:padding="5dp"
+                    android:textColor="@color/textColor" />
+
+                <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/scheduleInformationText"
+                    android:orientation="vertical"
+                    app:ael_duration="2000"
+                    app:ael_expanded="false"
+                    app:ael_interpolator="bounce"
+                    android:id="@+id/expandableLayout3">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/startDateText"
+                            android:textColor="#000000"
+                            android:paddingBottom="10sp"
+                            android:text="Start Date: "/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColor"
+                            android:textSize="15sp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Today"
+                            android:layout_toRightOf="@id/startDateText"
+                            android:paddingLeft="10dp"
+                            android:id="@+id/startDateTextSelector"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Duration :"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:layout_below="@id/startDateText"
+                            android:layout_alignParentLeft="true"
+                            android:id="@+id/durationText"
+                            android:paddingTop="6dp"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Continuous"
+                            android:layout_marginLeft="6dp"
+                            android:layout_below="@id/startDateText"
+                            android:layout_toRightOf="@id/durationText"
+                            android:id="@+id/continuousChecked"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="6dp"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Number of Days"
+                            android:layout_marginLeft="6dp"
+                            android:layout_below="@id/startDateText"
+                            android:layout_toRightOf="@id/continuousChecked"
+                            android:id="@+id/noOfDaysChecked"
+                            android:paddingBottom="5dp"
+                            android:paddingTop="6dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="18dp"
+                            android:text="Days"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:id="@+id/daysText"
+                            android:layout_below="@id/durationText"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Every Day"
+                            android:layout_below="@id/daysText"
+                            android:id="@+id/everyDayRadioButton"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Specific days of week"
+                            android:layout_below="@id/everyDayRadioButton"
+                            android:id="@+id/specificDaysOfWeekRadioButton"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Days interval"
+                            android:layout_below="@id/specificDaysOfWeekRadioButton"
+                            android:id="@+id/daysIntervalRadioButton"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Birth control cycle"
+                            android:layout_below="@id/daysIntervalRadioButton"
+                            android:id="@+id/birthControlRadioButton"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/birthControlInfoText"
+                            android:paddingTop="6dp"
+                            android:paddingLeft="10dp"
+                            android:text="information"
+                            android:layout_below="@id/daysIntervalRadioButton"
+                            android:layout_toRightOf="@id/birthControlRadioButton"/>
+
+                    </RelativeLayout>
+
+                </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardViewer4"
+            android:layout_margin="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_margin="2dp"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    android:id="@+id/scrollButton4"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/instructionText"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="20sp"
+                    android:text="Instructions"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/instructionInformationText"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/instructionText"
+                    android:padding="5dp"
+                    android:textColor="@color/textColor" />
+
+                <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/instructionInformationText"
+                    android:orientation="vertical"
+                    app:ael_duration="2000"
+                    app:ael_expanded="false"
+                    app:ael_interpolator="bounce"
+                    android:id="@+id/expandableLayout4">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/medicationDoseText"
+                            android:textColor="#000000"
+                            android:textSize="20sp"
+                            android:paddingBottom="10dp"
+                            android:text="Medication dose: "/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColor"
+                            android:textSize="20sp"
+                            android:layout_marginBottom="5dp"
+                            android:text="tap to set"
+                            android:layout_toRightOf="@id/medicationDoseText"
+                            android:paddingLeft="10dp"
+                            android:id="@+id/medicationDoseSetText"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="18dp"
+                            android:text="Food Instructions"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            android:id="@+id/foodInstructionText"
+                            android:layout_below="@id/medicationDoseText"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="before food"
+                            android:layout_below="@id/foodInstructionText"
+                            android:id="@+id/beforeFoodRadioButton"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="with food"
+                            android:layout_below="@id/beforeFoodRadioButton"
+                            android:id="@+id/withFoodRadioButton"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="after food"
+                            android:layout_below="@id/withFoodRadioButton"
+                            android:id="@+id/afterFoodRadioButton"/>
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="no food instructions"
+                            android:layout_below="@id/afterFoodRadioButton"
+                            android:id="@+id/noFoodInstructionRadioButton"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addtionalInfoText"
+                            android:paddingTop="28dp"
+                            android:text="Additional information"
+                            android:textSize="18sp"
+                            android:textColor="#000000"
+                            android:layout_below="@id/noFoodInstructionRadioButton" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/addtionalInfoEditText"
+                            android:layout_below="@id/addtionalInfoText"/>
+
+                    </RelativeLayout>
+
+                </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>
