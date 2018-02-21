@@ -4,12 +4,11 @@ import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -29,7 +28,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class NewReminderEntryActivity extends AppCompatActivity {
+public class NewReminderEntryActivity extends AppCompatActivity
+{
     List<String> initialItems = new ArrayList<>();
     List<String> frequencyExpandedItems = new ArrayList<>();
     List<String> intervalExpandedItems = new ArrayList<>();
@@ -37,7 +37,7 @@ public class NewReminderEntryActivity extends AppCompatActivity {
     List<TimeAndQuantity> timeAndQuantities = new ArrayList<>();
 
     private RecyclerView recyclerViewWithinRememberTimes;
-    private ExpandableLinearLayout expandableLinearLayout1,expandableLinearLayout2,expandableLinearLayout3,expandableLinearLayout4, expandableLinearLayout5;
+    private ExpandableLinearLayout expandableLinearLayout1, /*expandableLinearLayout2,*/ expandableLinearLayout3, expandableLinearLayout4, expandableLinearLayout5;
     private RelativeLayout scrollButton4, scrollButton1, scrollButton2, scrollButton3, scrollButton5;
     private CardView cardView1, cardView2, cardView3, cardView4, cardView5;
     private ScrollView scrollView;
@@ -47,7 +47,8 @@ public class NewReminderEntryActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_reminder_entry);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -55,86 +56,107 @@ public class NewReminderEntryActivity extends AppCompatActivity {
         initializeToSpinnerList();
 
         setViewExpandable(expandableLinearLayout1, cardView1, scrollButton1);
-        setViewExpandable(expandableLinearLayout2, cardView2, scrollButton2);
+        //setViewExpandable(expandableLinearLayout2, cardView2, scrollButton2);
         setViewExpandable(expandableLinearLayout3, cardView3, scrollButton3);
         setViewExpandable(expandableLinearLayout4, cardView4, scrollButton4);
         setViewExpandable(expandableLinearLayout5, cardView5, scrollButton5);
 
         NewReminderSpinnerAdapter spinnerAdapter = new NewReminderSpinnerAdapter(this, initialItems);
         reminderTimesSpinner.setAdapter(spinnerAdapter);
-        reminderTimesSpinner.setSelection(1);
+        reminderTimesSpinner.setSelection(0);
 
+        final int[] i = {0};
+        //randomListGenerator(++i[0]);
         recyclerViewWithinRememberTimes.setHasFixedSize(true);
         recyclerViewWithinRememberTimes.setLayoutManager(new LinearLayoutManager(this));
         final ReminderTimesRecyclerAdapter adapter = new ReminderTimesRecyclerAdapter(timeAndQuantities, this);
         recyclerViewWithinRememberTimes.setAdapter(adapter);
-        final int[] i = {0};
 
-        reminderTimesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        reminderTimesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(view.getContext(), initialItems.get(position), Toast.LENGTH_SHORT).show();
-                randomListGenerator(++i[0]);
-                adapter.updateDataSet(timeAndQuantities);
-                adapter.notifyDataSetChanged();
-                recyclerViewWithinRememberTimes.scrollToPosition(timeAndQuantities.size());
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id)
+            {
+                Toast.makeText(NewReminderEntryActivity.this, initialItems.get(position), Toast.LENGTH_SHORT).show();
+
+                if (position != 0)
+                {
+                    randomListGenerator(++i[0]);
+                    adapter.updateDataSet(timeAndQuantities);
+                    adapter.notifyDataSetChanged();
+                    recyclerViewWithinRememberTimes.scrollToPosition(timeAndQuantities.size());
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
 
             }
         });
 
-        dateSelectionText.setOnClickListener(new View.OnClickListener() {
+        dateSelectionText.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Calendar calendar = Calendar.getInstance();
                 DatePickerDialog datePickerDialog = new DatePickerDialog(NewReminderEntryActivity.this,
-                        R.style.Theme_AppCompat_Light_Dialog, dateSetListener, calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                                                                         R.style.Theme_AppCompat_Light_Dialog, dateSetListener, calendar.get(Calendar.YEAR),
+                                                                         calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
                 datePickerDialog.show();
             }
         });
 
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        dateSetListener = new DatePickerDialog.OnDateSetListener()
+        {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                dateSelectionText.setText(Integer.toString(dayOfMonth)+"/"+Integer.toString(month+1)+"/"+Integer.toString(year));
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+            {
+                dateSelectionText.setText(Integer.toString(dayOfMonth) + "/" + Integer.toString(month + 1) + "/" + Integer.toString(year));
             }
         };
     }
 
-    private void setViewExpandable(final ExpandableLinearLayout expandableLinearLayout, CardView onclickView, final RelativeLayout scrollButton) {
+    private void setViewExpandable(final ExpandableLinearLayout expandableLinearLayout, CardView onclickView, final RelativeLayout scrollButton)
+    {
         expandableLinearLayout.setInRecyclerView(true);
-        expandableLinearLayout.setListener(new ExpandableLayoutListenerAdapter() {
+        expandableLinearLayout.setListener(new ExpandableLayoutListenerAdapter()
+        {
             @Override
-            public void onPreOpen() {
+            public void onPreOpen()
+            {
                 changeRotation(scrollButton, 0f, 180f).start();
             }
 
             @Override
-            public void onPreClose() {
+            public void onPreClose()
+            {
                 changeRotation(scrollButton, 180f, 0f).start();
             }
         });
-        onclickView.setOnClickListener(new View.OnClickListener() {
+        onclickView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 expandableLinearLayout.toggle();
             }
         });
     }
 
-    private void randomListGenerator(int index) {
-        for(int i = 0; i < index; i++) {
-            timeAndQuantities.add(new TimeAndQuantity("Time "+(i+1), "Take "+(i+1)));
+    private void randomListGenerator(int index)
+    {
+        for (int i = 0; i < index; i++)
+        {
+            timeAndQuantities.add(new TimeAndQuantity("Time " + (i + 1), "Take " + (i + 1)));
         }
     }
 
-    private void initializeToSpinnerList() {
+    private void initializeToSpinnerList()
+    {
         initialItems.add("FREQUENCY");
         initialItems.add("Once a day");
         initialItems.add("Twice a day");
@@ -174,7 +196,8 @@ public class NewReminderEntryActivity extends AppCompatActivity {
         finalExpandedItems.addAll(intervalExpandedItems);
     }
 
-    private void findViewById() {
+    private void findViewById()
+    {
         scrollView = findViewById(R.id.scrollView);
         reminderTimesSpinner = findViewById(R.id.reminderTimeSelectorSpinner);
         recyclerViewWithinRememberTimes = findViewById(R.id.recyclerViewForReminderTimes);
@@ -184,7 +207,7 @@ public class NewReminderEntryActivity extends AppCompatActivity {
         scrollButton1 = findViewById(R.id.scrollButton1);
         cardView1 = findViewById(R.id.cardViewer1);
 
-        expandableLinearLayout2 = findViewById(R.id.expandableLayout2);
+        //expandableLinearLayout2 = findViewById(R.id.expandableLayout2);
         scrollButton2 = findViewById(R.id.scrollButton2);
         cardView2 = findViewById(R.id.cardViewer2);
 
@@ -203,7 +226,8 @@ public class NewReminderEntryActivity extends AppCompatActivity {
         cardView5 = findViewById(R.id.cardViewer5);
     }
 
-    private ObjectAnimator changeRotation(RelativeLayout scrollButton, float from, float to) {
+    private ObjectAnimator changeRotation(RelativeLayout scrollButton, float from, float to)
+    {
         ObjectAnimator animator = ObjectAnimator.ofFloat(scrollButton, "Rotation", from, to);
         animator.setDuration(300);
         animator.setInterpolator(Utils.createInterpolator(Utils.LINEAR_INTERPOLATOR));

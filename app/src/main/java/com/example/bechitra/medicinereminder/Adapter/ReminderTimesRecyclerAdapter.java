@@ -38,7 +38,7 @@ public class ReminderTimesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.time_and_quantity_for_medicine_for_cardview, null);
+        View view = inflater.inflate(R.layout.time_and_quantity_for_medicine_for_cardview, parent, false);
         return new TimeAndQuantityMedicine(view);
     }
 
