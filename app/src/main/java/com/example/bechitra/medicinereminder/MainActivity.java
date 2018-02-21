@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.bechitra.medicinereminder.Adapter.MainScreenRecyclerAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MainScreenRecyclerAdapter(this, medicineInformationList);
         recyclerView.setAdapter(adapter);
 
-        final Intent intent = new Intent(this, NewReminderActivity.class);
+        final Intent intent = new Intent(this, NewReminderEntryActivity.class);
 
         floatingActionButton = findViewById(R.id.actionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
