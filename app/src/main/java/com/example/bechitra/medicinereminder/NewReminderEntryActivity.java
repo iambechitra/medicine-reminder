@@ -1,6 +1,5 @@
 package com.example.bechitra.medicinereminder;
 
-import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +9,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
@@ -18,11 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bechitra.medicinereminder.Adapter.NewReminderSpinnerAdapter;
-import com.example.bechitra.medicinereminder.Adapter.ReminderTimesRecyclerAdapter;
-import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter;
-import com.github.aakira.expandablelayout.ExpandableLinearLayout;
-import com.github.aakira.expandablelayout.Utils;
+import com.example.bechitra.medicinereminder.adapter.NewReminderSpinnerAdapter;
+import com.example.bechitra.medicinereminder.adapter.ReminderTimesRecyclerAdapter;
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,8 +35,10 @@ public class NewReminderEntryActivity extends AppCompatActivity
     List<String> finalExpandedItems = new ArrayList<>();
     List<TimeAndQuantity> timeAndQuantities = new ArrayList<>();
 
+    float []ROTATION_ANGLE = new float[5];
+
     private RecyclerView recyclerViewWithinRememberTimes;
-    private ExpandableLinearLayout expandableLinearLayout1, /*expandableLinearLayout2,*/ expandableLinearLayout3, expandableLinearLayout4, expandableLinearLayout5;
+    ExpandableLayout expandableLayout1, expandableLayout2, expandableLayout3, expandableLayout4, expandableLayout5;
     private RelativeLayout scrollButton4, scrollButton1, scrollButton2, scrollButton3, scrollButton5;
     private CardView cardView1, cardView2, cardView3, cardView4, cardView5;
     private ScrollView scrollView;
@@ -55,11 +56,11 @@ public class NewReminderEntryActivity extends AppCompatActivity
         findViewById();
         initializeToSpinnerList();
 
-        setViewExpandable(expandableLinearLayout1, cardView1, scrollButton1);
-        //setViewExpandable(expandableLinearLayout2, cardView2, scrollButton2);
-        setViewExpandable(expandableLinearLayout3, cardView3, scrollButton3);
-        setViewExpandable(expandableLinearLayout4, cardView4, scrollButton4);
-        setViewExpandable(expandableLinearLayout5, cardView5, scrollButton5);
+        setViewExpandable(expandableLayout1, cardView1, scrollButton1, 1);
+        setViewExpandable(expandableLayout2, cardView2, scrollButton2, 2);
+        setViewExpandable(expandableLayout3, cardView3, scrollButton3, 3);
+        setViewExpandable(expandableLayout4, cardView4, scrollButton4, 4);
+        setViewExpandable(expandableLayout5, cardView5, scrollButton5, 5);
 
         NewReminderSpinnerAdapter spinnerAdapter = new NewReminderSpinnerAdapter(this, initialItems);
         reminderTimesSpinner.setAdapter(spinnerAdapter);
@@ -120,29 +121,19 @@ public class NewReminderEntryActivity extends AppCompatActivity
         };
     }
 
-    private void setViewExpandable(final ExpandableLinearLayout expandableLinearLayout, CardView onclickView, final RelativeLayout scrollButton)
+    private void setViewExpandable(final ExpandableLayout expandableLayout, CardView onclickView, final RelativeLayout scrollButton, final int serial)
     {
-        expandableLinearLayout.setInRecyclerView(true);
-        expandableLinearLayout.setListener(new ExpandableLayoutListenerAdapter()
-        {
+        onclickView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPreOpen()
-            {
-                changeRotation(scrollButton, 0f, 180f).start();
-            }
+            public void onClick(View v) {
+                expandableLayout.toggle();
 
-            @Override
-            public void onPreClose()
-            {
-                changeRotation(scrollButton, 180f, 0f).start();
-            }
-        });
-        onclickView.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                expandableLinearLayout.toggle();
+                Animation animation = new RotateAnimation(ROTATION_ANGLE[serial-1], getRotationAngle(scrollButton.getRotation(), serial-1), scrollButton.getPivotX(), scrollButton.getPivotY());
+                animation.setDuration(500);
+                animation.setRepeatCount(0);
+                animation.setRepeatMode(Animation.REVERSE);
+                animation.setFillAfter(true);
+                scrollButton.setAnimation(animation);
             }
         });
     }
@@ -203,34 +194,36 @@ public class NewReminderEntryActivity extends AppCompatActivity
         recyclerViewWithinRememberTimes = findViewById(R.id.recyclerViewForReminderTimes);
 
 
-        expandableLinearLayout1 = findViewById(R.id.expandableLayout1);
+        expandableLayout1 = findViewById(R.id.expandableLayout1);
         scrollButton1 = findViewById(R.id.scrollButton1);
         cardView1 = findViewById(R.id.cardViewer1);
 
-        //expandableLinearLayout2 = findViewById(R.id.expandableLayout2);
+        expandableLayout2 = findViewById(R.id.expandableLayout2);
         scrollButton2 = findViewById(R.id.scrollButton2);
         cardView2 = findViewById(R.id.cardViewer2);
 
-        expandableLinearLayout3 = findViewById(R.id.expandableLayout3);
+        expandableLayout3 = findViewById(R.id.expandableLayout3);
         scrollButton3 = findViewById(R.id.scrollButton3);
         cardView3 = findViewById(R.id.cardViewer3);
         dateSelectionText = findViewById(R.id.startDateTextSelector);
 
 
-        expandableLinearLayout4 = findViewById(R.id.expandableLayout4);
+        expandableLayout4 = findViewById(R.id.expandableLayout4);
         scrollButton4 = findViewById(R.id.scrollButton4);
         cardView4 = findViewById(R.id.cardViewer4);
 
-        expandableLinearLayout5 = findViewById(R.id.expandableLayout5);
+        expandableLayout5 = findViewById(R.id.expandableLayout5);
         scrollButton5 = findViewById(R.id.scrollButton5);
         cardView5 = findViewById(R.id.cardViewer5);
     }
 
-    private ObjectAnimator changeRotation(RelativeLayout scrollButton, float from, float to)
-    {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(scrollButton, "Rotation", from, to);
-        animator.setDuration(300);
-        animator.setInterpolator(Utils.createInterpolator(Utils.LINEAR_INTERPOLATOR));
-        return animator;
+    private float getRotationAngle(float current, int position) {
+        if(ROTATION_ANGLE[position] == 0) {
+            ROTATION_ANGLE[position] = 180;
+            return ROTATION_ANGLE[position];
+        }
+
+        ROTATION_ANGLE[position] = 0;
+        return ROTATION_ANGLE[position];
     }
 }

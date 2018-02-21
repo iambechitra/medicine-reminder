@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.bechitra.medicinereminder.Adapter.MainScreenRecyclerAdapter;
+import com.example.bechitra.medicinereminder.adapter.MainScreenRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

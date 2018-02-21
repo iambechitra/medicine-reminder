@@ -1,4 +1,4 @@
-package com.example.bechitra.medicinereminder.Adapter;
+package com.example.bechitra.medicinereminder.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.bechitra.medicinereminder.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
