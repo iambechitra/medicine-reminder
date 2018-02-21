@@ -2,6 +2,7 @@ package com.example.bechitra.medicinereminder.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,10 @@ public class NewReminderSpinnerAdapter extends BaseAdapter{
 
     }
 
+    public void updateDataSet(List<String> list) {
+        this.list = list;
+    }
+
     @Override
     public int getCount() {
         return list.size();
@@ -51,6 +56,8 @@ public class NewReminderSpinnerAdapter extends BaseAdapter{
         View view = inflater.inflate(R.layout.new_reminder_spinner_row, null);
         TextView textView = view.findViewById(R.id.newReminderSpinnerRowTextView);
         textView.setText(list.get(position));
+        if(list.get(position).equals("INTERVALS") || list.get(position).equals("FREQUENCY"))
+            textView.setTextColor(Color.parseColor("#9E9E9E"));
 
         return view;
     }

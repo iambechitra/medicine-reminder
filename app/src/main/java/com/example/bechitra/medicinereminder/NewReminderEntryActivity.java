@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,16 +30,18 @@ import java.util.List;
 
 public class NewReminderEntryActivity extends AppCompatActivity
 {
-    List<String> initialItems = new ArrayList<>();
-    List<String> frequencyExpandedItems = new ArrayList<>();
-    List<String> intervalExpandedItems = new ArrayList<>();
-    List<String> finalExpandedItems = new ArrayList<>();
-    List<TimeAndQuantity> timeAndQuantities = new ArrayList<>();
+    private List<String> initialItemsPart1 = new ArrayList<>();
+    private List<String> initialItemsPart2 = new ArrayList<>();
+    private List<String> frequencyExpandedItems = new ArrayList<>();
+    private List<String> intervalExpandedItems = new ArrayList<>();
+    private List<String> finalExpandedItems = new ArrayList<>();
+    private List<TimeAndQuantity> timeAndQuantities = new ArrayList<>();
 
-    float []ROTATION_ANGLE = new float[5];
+    private boolean isFrequencyExpanded = false, isIntervalExpanded = false; /*TO check wheather the frequency or interval was expanded before or not */
+    private float []ROTATION_ANGLE = new float[5];
 
     private RecyclerView recyclerViewWithinRememberTimes;
-    ExpandableLayout expandableLayout1, expandableLayout2, expandableLayout3, expandableLayout4, expandableLayout5;
+    private ExpandableLayout expandableLayout1, expandableLayout2, expandableLayout3, expandableLayout4, expandableLayout5;
     private RelativeLayout scrollButton4, scrollButton1, scrollButton2, scrollButton3, scrollButton5;
     private CardView cardView1, cardView2, cardView3, cardView4, cardView5;
     private ScrollView scrollView;
@@ -62,11 +65,14 @@ public class NewReminderEntryActivity extends AppCompatActivity
         setViewExpandable(expandableLayout4, cardView4, scrollButton4, 4);
         setViewExpandable(expandableLayout5, cardView5, scrollButton5, 5);
 
-        NewReminderSpinnerAdapter spinnerAdapter = new NewReminderSpinnerAdapter(this, initialItems);
+        finalExpandedItems.addAll(initialItemsPart1);
+        finalExpandedItems.addAll(initialItemsPart2);
+        final NewReminderSpinnerAdapter spinnerAdapter = new NewReminderSpinnerAdapter(this, finalExpandedItems);
         reminderTimesSpinner.setAdapter(spinnerAdapter);
-        reminderTimesSpinner.setSelection(0);
+        reminderTimesSpinner.setSelection(1);
 
         final int[] i = {0};
+        final Handler handler = new Handler();
         //randomListGenerator(++i[0]);
         recyclerViewWithinRememberTimes.setHasFixedSize(true);
         recyclerViewWithinRememberTimes.setLayoutManager(new LinearLayoutManager(this));
@@ -78,14 +84,54 @@ public class NewReminderEntryActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id)
             {
-                Toast.makeText(NewReminderEntryActivity.this, initialItems.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewReminderEntryActivity.this, finalExpandedItems.get(position), Toast.LENGTH_SHORT).show();
 
-                if (position != 0)
-                {
+                if (finalExpandedItems.get(position).equals("FREQUENCY") || finalExpandedItems.get(position).equals("INTERVALS")) {
+
+                }
+
+                if (!finalExpandedItems.get(position).equals("FREQUENCY") &&
+                        !finalExpandedItems.get(position).equals("INTERVALS") && !finalExpandedItems.get(position).equals("...")) {
                     randomListGenerator(++i[0]);
                     adapter.updateDataSet(timeAndQuantities);
                     adapter.notifyDataSetChanged();
                     recyclerViewWithinRememberTimes.scrollToPosition(timeAndQuantities.size());
+                }
+
+                /*Re Open the Spinner after refreshing the list of items*/
+                if(finalExpandedItems.get(position).equals("...")) {
+                    finalExpandedItems.clear();
+                    if(position == 4) {
+                        if(!isIntervalExpanded) {
+                            finalExpandedItems.add("FREQUENCY");
+                            finalExpandedItems.addAll(frequencyExpandedItems);
+                            finalExpandedItems.addAll(initialItemsPart2);
+                            isFrequencyExpanded = true;
+                        } else
+                            BindListOfAllItemsTogether();
+                    } else {
+
+                        if(!isFrequencyExpanded) {
+                            finalExpandedItems.addAll(initialItemsPart1);
+                            finalExpandedItems.add("INTERVALS");
+                            finalExpandedItems.addAll(intervalExpandedItems);
+                            isIntervalExpanded = true;
+                        } else
+                            BindListOfAllItemsTogether();
+
+                    }
+
+                    spinnerAdapter.updateDataSet(finalExpandedItems);
+                    spinnerAdapter.notifyDataSetChanged();
+                    new Thread(new Runnable() {
+                        public void run() {
+                            handler.postDelayed(new Runnable() {
+                                public void run() {
+                                    reminderTimesSpinner.performClick();
+                                }
+                            }, 100);
+                        }
+                    }).start();
                 }
             }
 
@@ -148,16 +194,16 @@ public class NewReminderEntryActivity extends AppCompatActivity
 
     private void initializeToSpinnerList()
     {
-        initialItems.add("FREQUENCY");
-        initialItems.add("Once a day");
-        initialItems.add("Twice a day");
-        initialItems.add("3 times a day");
-        initialItems.add("...");
-        initialItems.add("INTERVALS");
-        initialItems.add("Every 12 hours");
-        initialItems.add("Every 8 hours");
-        initialItems.add("Every 6 hours");
-        initialItems.add("...");
+        initialItemsPart1.add("FREQUENCY");
+        initialItemsPart1.add("Once a day");
+        initialItemsPart1.add("Twice a day");
+        initialItemsPart1.add("3 times a day");
+        initialItemsPart1.add("...");
+        initialItemsPart2.add("INTERVALS");
+        initialItemsPart2.add("Every 12 hours");
+        initialItemsPart2.add("Every 8 hours");
+        initialItemsPart2.add("Every 6 hours");
+        initialItemsPart2.add("...");
 
 
         frequencyExpandedItems.add("Once a day");
@@ -180,7 +226,9 @@ public class NewReminderEntryActivity extends AppCompatActivity
         intervalExpandedItems.add("Every 3 hours");
         intervalExpandedItems.add("Every 2 hours");
         intervalExpandedItems.add("Every hour");
+    }
 
+    private void BindListOfAllItemsTogether() {
         finalExpandedItems.add("FREQUENCY");
         finalExpandedItems.addAll(frequencyExpandedItems);
         finalExpandedItems.add("INTERVALS");
