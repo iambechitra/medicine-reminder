@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+
 import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
@@ -14,12 +16,15 @@ public class NewReminderActivity extends AppCompatActivity {
     ExpandableLinearLayout expandableLinearLayout1,expandableLinearLayout2,expandableLinearLayout3,expandableLinearLayout4;
     RelativeLayout scrollButton4, scrollButton1, scrollButton2, scrollButton3;
     CardView cardView1, cardView2, cardView3, cardView4;
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_reminder);
         findViewById();
+        scrollView.fullScroll(View.FOCUS_DOWN);
+
         setViewExpandable(expandableLinearLayout1, cardView1, scrollButton1);
         setViewExpandable(expandableLinearLayout2, cardView2, scrollButton2);
         setViewExpandable(expandableLinearLayout3, cardView3, scrollButton3);
@@ -43,11 +48,14 @@ public class NewReminderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 expandableLinearLayout.toggle();
+                scrollView.fullScroll(View.FOCUS_FORWARD);
             }
         });
     }
 
     private void findViewById() {
+        scrollView = findViewById(R.id.scrollView);
+
         expandableLinearLayout1 = findViewById(R.id.expandableLayout1);
         scrollButton1 = findViewById(R.id.scrollButton1);
         cardView1 = findViewById(R.id.cardViewer1);

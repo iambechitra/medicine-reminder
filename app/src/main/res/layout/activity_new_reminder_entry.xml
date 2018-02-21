@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relative"
+    android:id="@+id/scrollView"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,9 +52,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/medicineNameInstruction"
                     android:orientation="vertical"
-                    app:ael_duration="2000"
+                    app:ael_duration="1000"
                     app:ael_expanded="false"
-                    app:ael_interpolator="bounce"
                     android:id="@+id/expandableLayout1">
 
                     <TextView
@@ -124,9 +123,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/reminderTimesOverViewText"
                     android:orientation="vertical"
-                    app:ael_duration="400"
+                    app:ael_duration="1500"
                     app:ael_expanded="false"
-                    app:ael_interpolator="bounce"
                     android:id="@+id/expandableLayout2">
 
                     <Spinner
@@ -181,9 +179,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/scheduleInformationText"
                     android:orientation="vertical"
-                    app:ael_duration="2000"
+                    app:ael_duration="1500"
                     app:ael_expanded="false"
-                    app:ael_interpolator="bounce"
                     android:id="@+id/expandableLayout3">
 
                     <RelativeLayout
@@ -341,9 +338,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/instructionInformationText"
                     android:orientation="vertical"
-                    app:ael_duration="2000"
+                    app:ael_duration="1500"
                     app:ael_expanded="false"
-                    app:ael_interpolator="bounce"
                     android:id="@+id/expandableLayout4">
 
                     <RelativeLayout
