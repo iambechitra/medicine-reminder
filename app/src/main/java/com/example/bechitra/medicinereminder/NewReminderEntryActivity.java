@@ -26,10 +26,16 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.SimpleTimeZone;
 
 public class NewReminderEntryActivity extends AppCompatActivity
 {
+    private Map<String, Integer> frequencyMap = new HashMap<>();
+    private Map<String, Integer> intervalMap = new HashMap<>();
     private List<String> initialItemsPart1 = new ArrayList<>();
     private List<String> initialItemsPart2 = new ArrayList<>();
     private List<String> frequencyExpandedItems = new ArrayList<>();
@@ -58,12 +64,13 @@ public class NewReminderEntryActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         findViewById();
         initializeToSpinnerList();
+        SetMapFrequencyAndInterval();
 
-        setViewExpandable(expandableLayout1, cardView1, scrollButton1, 1);
-        setViewExpandable(expandableLayout2, cardView2, scrollButton2, 2);
-        setViewExpandable(expandableLayout3, cardView3, scrollButton3, 3);
-        setViewExpandable(expandableLayout4, cardView4, scrollButton4, 4);
-        setViewExpandable(expandableLayout5, cardView5, scrollButton5, 5);
+        SetViewExpandable(expandableLayout1, cardView1, scrollButton1, 1);
+        SetViewExpandable(expandableLayout2, cardView2, scrollButton2, 2);
+        SetViewExpandable(expandableLayout3, cardView3, scrollButton3, 3);
+        SetViewExpandable(expandableLayout4, cardView4, scrollButton4, 4);
+        SetViewExpandable(expandableLayout5, cardView5, scrollButton5, 5);
 
         finalExpandedItems.addAll(initialItemsPart1);
         finalExpandedItems.addAll(initialItemsPart2);
@@ -71,9 +78,7 @@ public class NewReminderEntryActivity extends AppCompatActivity
         reminderTimesSpinner.setAdapter(spinnerAdapter);
         reminderTimesSpinner.setSelection(1);
 
-        final int[] i = {0};
         final Handler handler = new Handler();
-        //randomListGenerator(++i[0]);
         recyclerViewWithinRememberTimes.setHasFixedSize(true);
         recyclerViewWithinRememberTimes.setLayoutManager(new LinearLayoutManager(this));
         final ReminderTimesRecyclerAdapter adapter = new ReminderTimesRecyclerAdapter(timeAndQuantities, this);
@@ -84,15 +89,22 @@ public class NewReminderEntryActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id)
             {
-                Toast.makeText(NewReminderEntryActivity.this, finalExpandedItems.get(position), Toast.LENGTH_SHORT).show();
-
                 if (finalExpandedItems.get(position).equals("FREQUENCY") || finalExpandedItems.get(position).equals("INTERVALS")) {
+                    if(finalExpandedItems.get(position).equals("INTERVALS")) {
+                        reminderTimesSpinner.setSelection(position+1);
+                    } else
+                        reminderTimesSpinner.setSelection(1);
 
                 }
 
                 if (!finalExpandedItems.get(position).equals("FREQUENCY") &&
                         !finalExpandedItems.get(position).equals("INTERVALS") && !finalExpandedItems.get(position).equals("...")) {
-                    randomListGenerator(++i[0]);
+
+                    if(finalExpandedItems.get(position).contains("Every"))
+                        randomListGenerator(intervalMap.get(finalExpandedItems.get(position)));
+                    else
+                        randomListGenerator(frequencyMap.get(finalExpandedItems.get(position)));
+
                     adapter.updateDataSet(timeAndQuantities);
                     adapter.notifyDataSetChanged();
                     recyclerViewWithinRememberTimes.scrollToPosition(timeAndQuantities.size());
@@ -167,14 +179,14 @@ public class NewReminderEntryActivity extends AppCompatActivity
         };
     }
 
-    private void setViewExpandable(final ExpandableLayout expandableLayout, CardView onclickView, final RelativeLayout scrollButton, final int serial)
+    private void SetViewExpandable(final ExpandableLayout expandableLayout, CardView onclickView, final RelativeLayout scrollButton, final int serial)
     {
         onclickView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 expandableLayout.toggle();
 
-                Animation animation = new RotateAnimation(ROTATION_ANGLE[serial-1], getRotationAngle(scrollButton.getRotation(), serial-1), scrollButton.getPivotX(), scrollButton.getPivotY());
+                Animation animation = new RotateAnimation(ROTATION_ANGLE[serial-1], getRotationAngle(serial-1), scrollButton.getPivotX(), scrollButton.getPivotY());
                 animation.setDuration(500);
                 animation.setRepeatCount(0);
                 animation.setRepeatMode(Animation.REVERSE);
@@ -186,10 +198,65 @@ public class NewReminderEntryActivity extends AppCompatActivity
 
     private void randomListGenerator(int index)
     {
+        String[] timeSet = getRandomTime(index);
+        timeAndQuantities.clear();
         for (int i = 0; i < index; i++)
-        {
-            timeAndQuantities.add(new TimeAndQuantity("Time " + (i + 1), "Take " + (i + 1)));
+            timeAndQuantities.add(new TimeAndQuantity(timeSet[i], "Take " + (i + 1)));
+    }
+
+    private String[] getRandomTime(int times) {
+        int [] time = new int[times];
+        String[] timeSet = new String[times];
+        int interval = 24/times;
+        int INIT_TIME = 8;
+        for(int i = 0; i < times; i++) {
+            time[i] = INIT_TIME;
+            INIT_TIME += interval;
         }
+
+        for(int i = 0 ; i < time.length; i++) {
+            if(time[i] >= 12 && time[i] < 24) {
+                if(time[i] == 12)
+                    timeSet[i] = Integer.toString(time[i])+".00PM";
+                else {
+                    int temp = (time[i] - 12);
+                    timeSet[i] = Integer.toString(temp) + ".00PM";
+                }
+            } else {
+                if(time[i] == 24) {
+                    timeSet[i] = "12.00PM";
+                } else if(time[i] > 24) {
+                    int temp = (time[i] -24);
+                    timeSet[i] = Integer.toString(temp)+".00AM";
+                } else
+                    timeSet[i] = Integer.toString(time[i])+".00AM";
+            }
+
+        }
+        return timeSet;
+    }
+
+    private void SetMapFrequencyAndInterval() {
+        frequencyMap.put("Once a day", 1);
+        frequencyMap.put("Twice a day", 2);
+        frequencyMap.put("3 times a day", 3);
+        frequencyMap.put("4 times a day", 4);
+        frequencyMap.put("5 times a day", 5);
+        frequencyMap.put("6 times a day", 6);
+        frequencyMap.put("7 times a day", 7);
+        frequencyMap.put("8 times a day", 8);
+        frequencyMap.put("9 times a day", 9);
+        frequencyMap.put("10 times a day", 10);
+        frequencyMap.put("11 times a day", 11);
+        frequencyMap.put("12 times a day", 12);
+
+        intervalMap.put("Every 12 hours", 2);
+        intervalMap.put("Every 8 hours", 3);
+        intervalMap.put("Every 6 hours", 4);
+        intervalMap.put("Every 4 hours", 6);
+        intervalMap.put("Every 3 hours", 8);
+        intervalMap.put("Every 2 hours", 12);
+        intervalMap.put("Every hour", 24);
     }
 
     private void initializeToSpinnerList()
@@ -265,7 +332,7 @@ public class NewReminderEntryActivity extends AppCompatActivity
         cardView5 = findViewById(R.id.cardViewer5);
     }
 
-    private float getRotationAngle(float current, int position) {
+    private float getRotationAngle(int position) {
         if(ROTATION_ANGLE[position] == 0) {
             ROTATION_ANGLE[position] = 180;
             return ROTATION_ANGLE[position];

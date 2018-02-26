@@ -2,6 +2,7 @@ package com.example.bechitra.medicinereminder.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,14 +56,6 @@ public class MainScreenRecyclerAdapter extends RecyclerView.Adapter<MainScreenRe
             medicineName = itemView.findViewById(R.id.medicineNameTextView);
             medicineInformation = itemView.findViewById(R.id.descriptionTextView);
             medicineTakeTime = itemView.findViewById(R.id.timeTextView);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Toast.makeText(v.getContext(), "ItemSerial Clicked! "+medicineName.getText(), Toast.LENGTH_SHORT).show();
-                    medicineName.setText("ItemSerial Click");
-                }
-            });
         }
     }
 }

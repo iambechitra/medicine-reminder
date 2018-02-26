@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TimePicker
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/timePicker">
+
+    </TimePicker>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:text="Set quantity(Number of doses) to be taken at this hour"
+        android:textSize="14dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doses"
+            android:id="@+id/dosesToTakeText"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/addition"
+            android:id="@+id/incrementButton"
+            android:layout_toLeftOf="@id/dosesToTakeText"/>
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/subtraction"
+            android:id="@+id/decrementButton"
+            android:layout_toRightOf="@id/dosesToTakeText"/>
+    </RelativeLayout>
+
+</LinearLayout>
