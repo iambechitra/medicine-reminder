@@ -40,8 +40,7 @@
                     android:layout_alignParentLeft="true"
                     android:text="Medicine Name"
                     android:textColor="@color/textColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/medicineNameInstruction"
@@ -113,8 +112,7 @@
                     android:layout_alignParentLeft="true"
                     android:text="Reminder Times"
                     android:textColor="@color/textColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/reminderTimesOverViewText"
@@ -183,8 +181,7 @@
                     android:layout_alignParentLeft="true"
                     android:text="Schedule"
                     android:textColor="@color/textColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/scheduleInformationText"
@@ -225,8 +222,7 @@
                             android:paddingLeft="10dp"
                             android:text="tap to set"
                             android:textColor="@color/textColor"
-                            android:textSize="15sp"
-                            android:textStyle="bold"/>
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/durationText"
@@ -343,8 +339,7 @@
                     android:layout_alignParentLeft="true"
                     android:text="Instructions"
                     android:textColor="@color/textColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/instructionInformationText"
@@ -386,8 +381,7 @@
                             android:paddingLeft="10dp"
                             android:text="tap to set"
                             android:textColor="@color/textColor"
-                            android:textSize="20sp"
-                            android:textStyle="bold"/>
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/foodInstructionText"
@@ -480,8 +474,7 @@
                     android:layout_alignParentLeft="true"
                     android:text="Prescription Refill"
                     android:textColor="@color/textColor"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/refillReminderOverviewText"

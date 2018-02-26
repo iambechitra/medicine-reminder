@@ -1,5 +1,6 @@
 package com.example.bechitra.medicinereminder;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,24 +14,25 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bechitra.medicinereminder.adapter.NewReminderSpinnerAdapter;
 import com.example.bechitra.medicinereminder.adapter.ReminderTimesRecyclerAdapter;
+import com.example.bechitra.medicinereminder.dialog.DaySelectionDialog;
+
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SimpleTimeZone;
 
 public class NewReminderEntryActivity extends AppCompatActivity
 {
@@ -53,7 +55,8 @@ public class NewReminderEntryActivity extends AppCompatActivity
     private ScrollView scrollView;
     private TextView dateSelectionText;
     private Spinner reminderTimesSpinner;
-
+    private RadioButton specificDaysOfWeek, everyDay, daysInterval, birthControlCycle, beforeFood, withFood, afterFood, noFoodInstruction;
+    private CheckBox continiousDuration, numberOfDaysDuration;
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
     @Override
@@ -177,6 +180,10 @@ public class NewReminderEntryActivity extends AppCompatActivity
                 dateSelectionText.setText(Integer.toString(dayOfMonth) + "/" + Integer.toString(month + 1) + "/" + Integer.toString(year));
             }
         };
+
+        onClickListnerForDaysItem();
+        onClickListnerForFoodInstruction();
+        onCheckedListnerForDuration();
     }
 
     private void SetViewExpandable(final ExpandableLayout expandableLayout, CardView onclickView, final RelativeLayout scrollButton, final int serial)
@@ -192,6 +199,71 @@ public class NewReminderEntryActivity extends AppCompatActivity
                 animation.setRepeatMode(Animation.REVERSE);
                 animation.setFillAfter(true);
                 scrollButton.setAnimation(animation);
+            }
+        });
+    }
+
+
+    /* This function set OnclickListner for Days items on "Schedule" sub View;
+     * Specifically set OnlcickListner for EveryDay, specific days of week, Days Interval, Birth control Cycle radioButton */
+    private void onClickListnerForDaysItem() {
+        specificDaysOfWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DaySelectionDialog daySelectionDialog = new DaySelectionDialog();
+                daySelectionDialog.show(getFragmentManager(), "Select Days");
+                onItemChecked((RadioButton)v, true);
+            }
+        });
+
+        everyDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemChecked((RadioButton) v, true);
+            }
+        });
+
+        daysInterval.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemChecked((RadioButton)v, true);
+            }
+        });
+
+        birthControlCycle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemChecked((RadioButton)v, true);
+            }
+        });
+    }
+
+    private void onClickListnerForFoodInstruction() {
+        beforeFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFoodInstructionItemChecked((RadioButton)v, true);
+            }
+        });
+
+        afterFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFoodInstructionItemChecked((RadioButton)v, true);
+            }
+        });
+
+        withFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFoodInstructionItemChecked((RadioButton)v, true);
+            }
+        });
+
+        noFoodInstruction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFoodInstructionItemChecked((RadioButton)v, true);
             }
         });
     }
@@ -295,6 +367,7 @@ public class NewReminderEntryActivity extends AppCompatActivity
         intervalExpandedItems.add("Every hour");
     }
 
+    /* Binding all the value together for Spinner within Reminder Times subView */
     private void BindListOfAllItemsTogether() {
         finalExpandedItems.add("FREQUENCY");
         finalExpandedItems.addAll(frequencyExpandedItems);
@@ -302,6 +375,26 @@ public class NewReminderEntryActivity extends AppCompatActivity
         finalExpandedItems.addAll(intervalExpandedItems);
     }
 
+    private void onCheckedListnerForDuration() {
+        continiousDuration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                continiousDuration.setChecked(true);
+                numberOfDaysDuration.setChecked(false);
+            }
+        });
+
+        numberOfDaysDuration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numberOfDaysDuration.setChecked(true);
+                continiousDuration.setChecked(false);
+            }
+        });
+    }
+
+
+    /* Initialize all the view with its ID */
     private void findViewById()
     {
         scrollView = findViewById(R.id.scrollView);
@@ -330,6 +423,19 @@ public class NewReminderEntryActivity extends AppCompatActivity
         expandableLayout5 = findViewById(R.id.expandableLayout5);
         scrollButton5 = findViewById(R.id.scrollButton5);
         cardView5 = findViewById(R.id.cardViewer5);
+
+        specificDaysOfWeek = findViewById(R.id.specificDaysOfWeekRadioButton);
+        everyDay = findViewById(R.id.everyDayRadioButton);
+        daysInterval = findViewById(R.id.daysIntervalRadioButton);
+        birthControlCycle = findViewById(R.id.birthControlRadioButton);
+
+        beforeFood = findViewById(R.id.beforeFoodRadioButton);
+        afterFood = findViewById(R.id.afterFoodRadioButton);
+        withFood = findViewById(R.id.withFoodRadioButton);
+        noFoodInstruction = findViewById(R.id.noFoodInstructionRadioButton);
+
+        continiousDuration = findViewById(R.id.continuousChecked);
+        numberOfDaysDuration = findViewById(R.id.noOfDaysChecked);
     }
 
     private float getRotationAngle(int position) {
@@ -340,5 +446,53 @@ public class NewReminderEntryActivity extends AppCompatActivity
 
         ROTATION_ANGLE[position] = 0;
         return ROTATION_ANGLE[position];
+    }
+
+    private void onFoodInstructionItemChecked(RadioButton radioButton, boolean isChecked) {
+        if(radioButton.getId() == R.id.withFoodRadioButton) {
+            afterFood.setChecked(false);
+            beforeFood.setChecked(false);
+            noFoodInstruction.setChecked(false);
+            withFood.setChecked(true);
+        } else if(radioButton.getId() == R.id.afterFoodRadioButton) {
+            withFood.setChecked(false);
+            beforeFood.setChecked(false);
+            noFoodInstruction.setChecked(false);
+            afterFood.setChecked(true);
+        } else if(radioButton.getId() == R.id.beforeFoodRadioButton) {
+            withFood.setChecked(false);
+            afterFood.setChecked(false);
+            noFoodInstruction.setChecked(false);
+            beforeFood.setChecked(true);
+        } else if(radioButton.getId() == R.id.noFoodInstructionRadioButton) {
+            withFood.setChecked(false);
+            afterFood.setChecked(false);
+            beforeFood.setChecked(false);
+            noFoodInstruction.setChecked(true);
+        }
+    }
+
+    private void onItemChecked(RadioButton buttonView, boolean isChecked) {
+        if(buttonView.getId() == R.id.everyDayRadioButton) {
+            specificDaysOfWeek.setChecked(false);
+            daysInterval.setChecked(false);
+            birthControlCycle.setChecked(false);
+            everyDay.setChecked(true);
+        } else if(buttonView.getId() == R.id.specificDaysOfWeekRadioButton) {
+            everyDay.setChecked(false);
+            daysInterval.setChecked(false);
+            birthControlCycle.setChecked(false);
+            specificDaysOfWeek.setChecked(true);
+        } else if(buttonView.getId() == R.id.daysIntervalRadioButton) {
+            everyDay.setChecked(false);
+            specificDaysOfWeek.setChecked(false);
+            birthControlCycle.setChecked(false);
+            daysInterval.setChecked(true);
+        } else if(buttonView.getId() == R.id.birthControlRadioButton) {
+            everyDay.setChecked(false);
+            specificDaysOfWeek.setChecked(false);
+            daysInterval.setChecked(false);
+            birthControlCycle.setChecked(true);
+        }
     }
 }

@@ -3,4 +3,6 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="enter_new_reminder">Add new reminder</string>
+    <string name="cancel">cancel</string>
+    <string name="ok">ok</string>
 </resources>
