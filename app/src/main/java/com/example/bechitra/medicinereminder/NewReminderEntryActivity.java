@@ -1,6 +1,5 @@
 package com.example.bechitra.medicinereminder;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -135,9 +134,9 @@ public class NewReminderEntryActivity extends AppCompatActivity
                             BindListOfAllItemsTogether();
 
                     }
-
                     spinnerAdapter.updateDataSet(finalExpandedItems);
                     spinnerAdapter.notifyDataSetChanged();
+
                     new Thread(new Runnable() {
                         public void run() {
                             handler.postDelayed(new Runnable() {
