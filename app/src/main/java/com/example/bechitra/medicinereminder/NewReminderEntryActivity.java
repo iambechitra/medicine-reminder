@@ -1,6 +1,8 @@
 package com.example.bechitra.medicinereminder;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,7 +25,9 @@ import android.widget.TextView;
 
 import com.example.bechitra.medicinereminder.adapter.NewReminderSpinnerAdapter;
 import com.example.bechitra.medicinereminder.adapter.ReminderTimesRecyclerAdapter;
+import com.example.bechitra.medicinereminder.dialog.BirthControllDialog;
 import com.example.bechitra.medicinereminder.dialog.DaySelectionDialog;
+import com.example.bechitra.medicinereminder.dialog.MedicationDoseSeletionDialog;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -52,7 +56,7 @@ public class NewReminderEntryActivity extends AppCompatActivity
     private RelativeLayout scrollButton4, scrollButton1, scrollButton2, scrollButton3, scrollButton5;
     private CardView cardView1, cardView2, cardView3, cardView4, cardView5;
     private ScrollView scrollView;
-    private TextView dateSelectionText;
+    private TextView dateSelectionText, medicationDoseSetText;
     private Spinner reminderTimesSpinner;
     private RadioButton specificDaysOfWeek, everyDay, daysInterval, birthControlCycle, beforeFood, withFood, afterFood, noFoodInstruction;
     private CheckBox continiousDuration, numberOfDaysDuration;
@@ -136,6 +140,7 @@ public class NewReminderEntryActivity extends AppCompatActivity
                     }
                     spinnerAdapter.updateDataSet(finalExpandedItems);
                     spinnerAdapter.notifyDataSetChanged();
+                    reminderTimesSpinner.setSelection(1);
 
                     new Thread(new Runnable() {
                         public void run() {
@@ -183,6 +188,23 @@ public class NewReminderEntryActivity extends AppCompatActivity
         onClickListnerForDaysItem();
         onClickListnerForFoodInstruction();
         onCheckedListnerForDuration();
+
+        birthControlCycle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BirthControllDialog dialog = new BirthControllDialog();
+                dialog.show(getFragmentManager(), "H");
+            }
+        });
+
+        medicationDoseSetText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MedicationDoseSeletionDialog dialog = new MedicationDoseSeletionDialog();
+                dialog.show(getFragmentManager(), "TAG");
+            }
+        });
+
     }
 
     private void SetViewExpandable(final ExpandableLayout expandableLayout, CardView onclickView, final RelativeLayout scrollButton, final int serial)
@@ -435,6 +457,8 @@ public class NewReminderEntryActivity extends AppCompatActivity
 
         continiousDuration = findViewById(R.id.continuousChecked);
         numberOfDaysDuration = findViewById(R.id.noOfDaysChecked);
+
+        medicationDoseSetText = findViewById(R.id.medicationDoseSetText);
     }
 
     private float getRotationAngle(int position) {
