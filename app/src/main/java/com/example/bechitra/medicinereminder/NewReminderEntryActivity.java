@@ -1,8 +1,6 @@
 package com.example.bechitra.medicinereminder;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,13 +19,15 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.bechitra.medicinereminder.adapter.NewReminderSpinnerAdapter;
 import com.example.bechitra.medicinereminder.adapter.ReminderTimesRecyclerAdapter;
-import com.example.bechitra.medicinereminder.dialog.BirthControllDialog;
+import com.example.bechitra.medicinereminder.dialog.BirthControlDialog;
 import com.example.bechitra.medicinereminder.dialog.DaySelectionDialog;
-import com.example.bechitra.medicinereminder.dialog.MedicationDoseSeletionDialog;
+import com.example.bechitra.medicinereminder.dialog.DaysIntervalDialog;
+import com.example.bechitra.medicinereminder.dialog.MedicationDoseSelectionDialog;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -36,6 +36,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class NewReminderEntryActivity extends AppCompatActivity
 {
@@ -61,12 +64,18 @@ public class NewReminderEntryActivity extends AppCompatActivity
     private RadioButton specificDaysOfWeek, everyDay, daysInterval, birthControlCycle, beforeFood, withFood, afterFood, noFoodInstruction;
     private CheckBox continiousDuration, numberOfDaysDuration;
     private DatePickerDialog.OnDateSetListener dateSetListener;
+    private Switch refillReminderSwitch;
+
+    @BindView(R.id.linear_refill)
+    View refillView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_reminder_entry);
+        ButterKnife.bind(this);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         findViewById();
         initializeToSpinnerList();
@@ -189,19 +198,33 @@ public class NewReminderEntryActivity extends AppCompatActivity
         onClickListnerForFoodInstruction();
         onCheckedListnerForDuration();
 
-        birthControlCycle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BirthControllDialog dialog = new BirthControllDialog();
-                dialog.show(getFragmentManager(), "H");
-            }
-        });
-
         medicationDoseSetText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MedicationDoseSeletionDialog dialog = new MedicationDoseSeletionDialog();
+                MedicationDoseSelectionDialog dialog = new MedicationDoseSelectionDialog();
                 dialog.show(getFragmentManager(), "TAG");
+            }
+        });
+
+        refillReminderSwitch.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(refillReminderSwitch.isChecked()) {
+
+                    refillView.setVisibility(View.VISIBLE);
+
+
+                    /*FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    DialogFragment newFragment = new RefillReminderDialog();
+                    newFragment.show(ft, "dialog");*/
+
+                }
+                else
+                {
+                    refillView.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -248,6 +271,8 @@ public class NewReminderEntryActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 onItemChecked((RadioButton)v, true);
+                DaysIntervalDialog dialog = new DaysIntervalDialog();
+                dialog.show(getFragmentManager(), "TAG");
             }
         });
 
@@ -255,6 +280,8 @@ public class NewReminderEntryActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 onItemChecked((RadioButton)v, true);
+                BirthControlDialog dialog = new BirthControlDialog();
+                dialog.show(getFragmentManager(), "TAG");
             }
         });
     }
@@ -459,6 +486,8 @@ public class NewReminderEntryActivity extends AppCompatActivity
         numberOfDaysDuration = findViewById(R.id.noOfDaysChecked);
 
         medicationDoseSetText = findViewById(R.id.medicationDoseSetText);
+
+        refillReminderSwitch = findViewById(R.id.refillReminderSwitch);
     }
 
     private float getRotationAngle(int position) {
@@ -500,22 +529,22 @@ public class NewReminderEntryActivity extends AppCompatActivity
             specificDaysOfWeek.setChecked(false);
             daysInterval.setChecked(false);
             birthControlCycle.setChecked(false);
-            everyDay.setChecked(true);
+            //everyDay.setChecked(true);
         } else if(buttonView.getId() == R.id.specificDaysOfWeekRadioButton) {
             everyDay.setChecked(false);
             daysInterval.setChecked(false);
             birthControlCycle.setChecked(false);
-            specificDaysOfWeek.setChecked(true);
+            //specificDaysOfWeek.setChecked(true);
         } else if(buttonView.getId() == R.id.daysIntervalRadioButton) {
             everyDay.setChecked(false);
             specificDaysOfWeek.setChecked(false);
             birthControlCycle.setChecked(false);
-            daysInterval.setChecked(true);
+            //daysInterval.setChecked(true);
         } else if(buttonView.getId() == R.id.birthControlRadioButton) {
             everyDay.setChecked(false);
             specificDaysOfWeek.setChecked(false);
             daysInterval.setChecked(false);
-            birthControlCycle.setChecked(true);
+            //birthControlCycle.setChecked(true);
         }
     }
 }

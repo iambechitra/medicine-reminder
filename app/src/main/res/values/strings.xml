@@ -5,4 +5,5 @@
     <string name="enter_new_reminder">Add new reminder</string>
     <string name="cancel">cancel</string>
     <string name="ok">ok</string>
+    <string name="refill_remind_text">When I have 20 meds remaining</string>
 </resources>

@@ -14,7 +14,7 @@ import com.example.bechitra.medicinereminder.R;
  * Created by bechitra on 3/2/18.
  */
 
-public class MedicationDoseSeletionDialog  extends DialogFragment{
+public class MedicationDoseSelectionDialog extends DialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

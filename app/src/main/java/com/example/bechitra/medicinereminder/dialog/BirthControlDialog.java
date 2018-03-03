@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.example.bechitra.medicinereminder.NewReminderEntryActivity;
 import com.example.bechitra.medicinereminder.R;
 
 /**
@@ -16,7 +15,7 @@ import com.example.bechitra.medicinereminder.R;
  */
 
 
-public class BirthControllDialog extends DialogFragment{
+public class BirthControlDialog extends DialogFragment{
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
